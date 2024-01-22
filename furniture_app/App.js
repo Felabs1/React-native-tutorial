@@ -1,8 +1,11 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
+import BottomTabNavigation from "./navigation/BottomTabNavigation";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -11,22 +14,31 @@ export default function App() {
     bold: require("./assets/fonts/Poppins-Bold.ttf"),
     medium: require("./assets/fonts/Poppins-Medium.ttf"),
     extrabold: require("./assets/fonts/Poppins-ExtraBold.ttf"),
+    semiBold: require("./assets/fonts/Poppins-SemiBold.ttf"),
   });
 
+  const Stack = createNativeStackNavigator();
+
   const onLayoutRootView = useCallback(async () => {
-    if (!fontsLoaded) {
+    if (fontsLoaded) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+  console.log(fontsLoaded);
 
   if (!fontsLoaded) {
     return null;
   }
   return (
-    <View style={styles.container}>
-      <Text style={styles.textStyle}>Nice one you worked. jujunum</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Bottom Navigation"
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -39,7 +51,6 @@ const styles = StyleSheet.create({
   },
 
   textStyle: {
-    fontFamily: "light",
     fontSize: 20,
   },
 });
