@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
 import BottomTabNavigation from "./navigation/BottomTabNavigation";
+import { Cart, Home } from "./screens";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -37,20 +38,12 @@ export default function App() {
           component={BottomTabNavigation}
           options={{ headerShown: false }}
         ></Stack.Screen>
+        <Stack.Screen
+          name="cart"
+          component={Home}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  textStyle: {
-    fontSize: 20,
-  },
-});
